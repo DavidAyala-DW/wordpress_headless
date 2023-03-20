@@ -54,7 +54,7 @@ export async function getStaticProps(context) {
   const response = await request.json();
   const data = response.data.post;
 
-  const header_request = await fetch(process.env.VERCEL_EDGE_FUNCTION);
+  const header_request = await fetch(process.env.EDGE_FUNCTION);
   const header_response = await header_request.json();
   const {data:{ header }} = header_response;
 

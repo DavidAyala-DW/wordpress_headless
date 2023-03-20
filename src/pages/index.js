@@ -1,5 +1,7 @@
 import parse from 'html-react-parser';
 import Head from 'next/head';
+import Script from 'next/script'
+
 
 export default function Home({data, header}) {
 
@@ -30,7 +32,7 @@ export default function Home({data, header}) {
           )
         }
 
-        <script src="/bundle.js"></script> 
+        <Script src="/bundle.js"></Script>        
 
       </main>
     </>

@@ -35,7 +35,7 @@ export default function Home({data, header}) {
 
 export async function getStaticProps(context) {
 
-  const endpoint = "https://kuruexpertscorner.com"
+  const endpoint = process.env.WORDPRESS_SITE
   const request = await fetch(`${endpoint}/graphql`, {
     method: 'POST',
     headers: {
@@ -54,7 +54,7 @@ export async function getStaticProps(context) {
   const response = await request.json();
   const data = response.data.post;
 
-  const header_request = await fetch("https://kuru-shopify-private-apps.vercel.app/api/wordpress/header");
+  const header_request = await fetch(process.env.VERCEL_EDGE_FUNCTION);
   const header_response = await header_request.json();
   const {data:{ header }} = header_response;
 

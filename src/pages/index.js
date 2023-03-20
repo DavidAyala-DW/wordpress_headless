@@ -30,7 +30,7 @@ export default function Home({data, header}) {
           )
         }
 
-        <script async src="/bundle.js"></script> 
+        <script src="/bundle.js"></script> 
 
       </main>
     </>

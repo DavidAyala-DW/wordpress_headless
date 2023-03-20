@@ -1,32 +1,32 @@
 import parse from 'html-react-parser';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
 
 export default function Home({data, header}) {
 
   const {content, title} = data;
-  const content_edited = content.replaceAll("<img", "<img style='display: none'");
-  const [html, setHTML] = useState(content_edited);
-
-  useEffect(() => {
-    const content_with_images = content.replaceAll("<img style='display: none'", "<img");
-    setHTML(content_with_images)
-  }, [content]);
   
   return (
 
     <>
+
       <Head>
         <title>{title}</title>
+        <link
+          rel="preload"
+          href="https://i0.wp.com/kuruexpertscorner.com/wp-content/uploads/2023/02/understand-plantar-fascia.webp?fit=750%2C362&ssl=1"
+          as="image"
+        />
       </Head>
+
       <>
         { parse(header) }
       </>
+
       <main>              
 
         {
-          html && (
-            parse(html)
+          content && (
+            parse(content)
           )
         }
 

@@ -5,10 +5,12 @@ import { useEffect, useState } from 'react';
 export default function Home({data, header}) {
 
   const {content, title} = data;
-  const [html, setHTML] = useState(content);
+  const content_edited = content.replaceAll("<img", "<img style='display: none'");
+  const [html, setHTML] = useState(content_edited);
 
   useEffect(() => {
-    setHTML(content);
+    const content_with_images = content.replaceAll("<img style='display: none'", "<img");
+    setHTML(content_with_images)
   }, [content]);
   
   return (
@@ -21,12 +23,15 @@ export default function Home({data, header}) {
         { parse(header) }
       </>
       <main>              
+
         {
           html && (
             parse(html)
           )
         }
+
         <script async src="/bundle.js"></script> 
+
       </main>
     </>
 

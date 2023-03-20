@@ -13,7 +13,7 @@ export default function Home({data, header}) {
         <title>{title}</title>
         <link
           rel="preload"
-          href="https://i0.wp.com/kuruexpertscorner.com/wp-content/uploads/2023/02/understand-plantar-fascia.webp?fit=750%2C362&ssl=1"
+          href="https://i0.wp.com/kuruexpertscorner.com/wp-content/uploads/2023/02/understand-plantar-fascia.webp?fit=450%2C217&ssl=1"
           as="image"
         />
       </Head>

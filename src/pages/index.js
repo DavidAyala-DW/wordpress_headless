@@ -25,9 +25,10 @@ export default function Home({data, header}) {
 
 export const getServerSideProps = async (ctx) => {
 
-  const {req} = ctx;
-  console.log(req);
-  // console.log(ctx);
+  const { query } = ctx;
+  const { extra, shop, logged_in_customer_id, path_prefix, timestamp, signature } = query;
+  console.log(extra, shop, logged_in_customer_id, path_prefix, timestamp, signature);
+
   return {
     props:{
       data:null

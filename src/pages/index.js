@@ -26,8 +26,29 @@ export default function Home({data, header}) {
 
 export const getServerSideProps = async (ctx) => {
 
-  const { query } = ctx;  
-  validate_hex(query);
+  const { query } = ctx;
+  if(!query || !query?.logged_in_customer_id){      
+
+    return {
+      redirect: {
+        destination: "https://www.kurufootwear.com/account/login",
+        permanent: false,
+      },
+    };
+
+  }
+
+  const valid_connection = validate_hex(query);
+  if(!valid_connection){
+
+    return {
+      redirect: {
+        destination: "https://www.kurufootwear.com/account/login",
+        permanent: false,
+      },
+    };
+    
+  }
 
   return {
     props:{

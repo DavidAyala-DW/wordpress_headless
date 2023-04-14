@@ -23,12 +23,13 @@ export default function Home({data, header}) {
   )
 }
 
-export async function getStaticProps(req,res) {
+export const getServerSideProps = async (ctx) => {
 
-  console.log(req);
 
+  console.log(ctx);
   return {
-    props: {data: "hi"},
+    props:{
+      data:null
+    }
   }
-
 }

@@ -1,3 +1,4 @@
+import { validate_hex } from '@/lib';
 import parse from 'html-react-parser';
 import Head from 'next/head';
 import Script from 'next/script'
@@ -25,9 +26,8 @@ export default function Home({data, header}) {
 
 export const getServerSideProps = async (ctx) => {
 
-  const { query } = ctx;
-  const { extra, shop, logged_in_customer_id, path_prefix, timestamp, signature } = query;
-  console.log(extra, shop, logged_in_customer_id, path_prefix, timestamp, signature);
+  const { query } = ctx;  
+  validate_hex(query);
 
   return {
     props:{

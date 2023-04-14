@@ -23,8 +23,9 @@ export default function Home({data, header}) {
   )
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps(req,res) {
 
+  console.log(req);
 
   return {
     props: {data: "hi"},

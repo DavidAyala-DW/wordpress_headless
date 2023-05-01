@@ -12,12 +12,9 @@
     <loc>https://www.kurufootwear.com/sitemap_blogs_1.xml</loc>
   </sitemap>
   <sitemap>
-    <loc>https://www.kurufootwear.com/a/seo/blog.xml</loc>
+    <loc>https://www.kurufootwear.com/a/sitemap/blog.xml</loc>
   </sitemap>
   <sitemap>
-    <loc>https://www.kurufootwear.com/a/seo/experts-corner.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://www.kurufootwear.com/a/seo/reports.xml</loc>
+    <loc>https://www.kurufootwear.com/a/sitemap/reports.xml</loc>
   </sitemap>
 </sitemapindex>

@@ -40,7 +40,7 @@ export default async function handler(req, res) {
     };
 
     try {
-      await fs.promises.writeFile(path.join("sitemap.json"), JSON.stringify(newParsedXML));
+      await fs.promises.writeFile(path.join("./tmp/sitemap.json"), JSON.stringify(newParsedXML));
       console.log("file created successfully");
       res.status(200).json({ message: 'File created successfully', data: newParsedXML });
     } catch (error) {

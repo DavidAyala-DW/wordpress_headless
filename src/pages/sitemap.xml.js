@@ -1,5 +1,5 @@
 import { XMLParser, XMLBuilder} from "fast-xml-parser";
-let current_sitemap = require('../../sitemap.json');
+let current_sitemap = require('../../tmp/sitemap.json');
 
 export default function SitemapXml({xml}) {
   return xml;

@@ -1,5 +1,8 @@
-import fs from 'fs';
-import path from 'path';
+import { MongoClient } from 'mongodb';
+const url = process.env.MONGO_URI;
+const dbName = 'sitemap';
+
+
 import { XMLParser} from "fast-xml-parser";
 
 export default async function handler(req, res) {
@@ -39,12 +42,24 @@ export default async function handler(req, res) {
       }
     };
 
+    const client = await MongoClient.connect(url);
+
     try {
-      await fs.promises.writeFile(path.join("./tmp/sitemap.json"), JSON.stringify(newParsedXML));
-      console.log("file created successfully");
+      
+      const db = client.db(dbName);    
+      const collection = db.collection("sitemaps");
+      await collection.updateOne(
+        {},
+        { $set: {xml: JSON.stringify(newParsedXML)} }, // The update operation
+        { upsert: true } // The upsert option
+      );
+
+      client.close();
+
       res.status(200).json({ message: 'File created successfully', data: newParsedXML });
     } catch (error) {
       console.error(error);
+      client.close();
       res.status(500).json({ message: 'Error creating file' });
     }    
 

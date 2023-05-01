@@ -1,5 +1,7 @@
 import { XMLParser, XMLBuilder} from "fast-xml-parser";
-let current_sitemap = require('../../tmp/sitemap.json');
+import { MongoClient } from 'mongodb';
+const url = process.env.MONGO_URI;
+const dbName = 'sitemap';
 
 export default function SitemapXml({xml}) {
   return xml;
@@ -7,13 +9,21 @@ export default function SitemapXml({xml}) {
 
 export async function getServerSideProps({req, res}) {
 
+  const client = await MongoClient.connect(url);
+  const db = client.db(dbName);    
+  const collection = db.collection("sitemaps");
+
+  const data = await collection.findOne({});
+
   const builder = new XMLBuilder({
     ignoreAttributes: false,
     attributeNamePrefix: "@@",
     format: true
   });
 
-  const xmlContent = builder.build(current_sitemap);
+  const current_sitemap = data?.xml;
+
+  const xmlContent = builder.build(JSON.parse(current_sitemap));
   res.setHeader('Content-Type', 'application/xml');
   res.setHeader('Cache-Control', 'public, max-age=86400');
   res.write(xmlContent)

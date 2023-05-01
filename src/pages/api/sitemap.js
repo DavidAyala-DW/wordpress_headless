@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { XMLParser, XMLBuilder} from "fast-xml-parser";
+import { XMLParser} from "fast-xml-parser";
 
 export default async function handler(req, res) {
 
@@ -30,24 +30,21 @@ export default async function handler(req, res) {
     const newParsedXML = {
       sitemapindex: {
         sitemap: [...filteredLocs, ...new_sitemaps],
+        date: [
+          {            
+            "@@value": new Date().toISOString()
+          }
+        ],
         "@@xmlns": currentParsedXML.sitemapindex["@@xmlns"]
       }
     };
 
-    const builder = new XMLBuilder({
-      ignoreAttributes: false,
-      attributeNamePrefix: "@@",
-      format: true
-    });
-
-    const xmlContent = builder.build(newParsedXML);
-
-    fs.writeFile(path.join(process.cwd(), "/public/sitemap.xml"), xmlContent, (err) => {
+    fs.writeFile(path.join(process.cwd(), "/sitemap.json"), JSON.stringify(newParsedXML), (err) => {
       if (err) {
         console.error(err);
         res.status(500).json({ message: 'Error creating file' });
       } else {
-        console.log("ile created successfully");
+        console.log("file created successfully");
         res.status(200).json({ message: 'File created successfully', data: newParsedXML });
       }      
     });

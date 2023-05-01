@@ -39,15 +39,14 @@ export default async function handler(req, res) {
       }
     };
 
-    fs.writeFile(path.join(process.cwd(), "/sitemap.json"), JSON.stringify(newParsedXML), (err) => {
-      if (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error creating file' });
-      } else {
-        console.log("file created successfully");
-        res.status(200).json({ message: 'File created successfully', data: newParsedXML });
-      }      
-    });
+    try {
+      await fs.promises.writeFile(path.join("sitemap.json"), JSON.stringify(newParsedXML));
+      console.log("file created successfully");
+      res.status(200).json({ message: 'File created successfully', data: newParsedXML });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error creating file' });
+    }    
 
   } else {
     res.status(405).json({ message: 'Method not allowed' });

@@ -3,7 +3,7 @@ import { XMLParser, XMLBuilder} from "fast-xml-parser";
 
 export default async function handler(req, res) {
 
-  if (req.method === 'POST') {
+  if (req.method === 'GET') {
 
     const request = await fetch("https://www.kurufootwear.com/sitemap.xml");
     const reponse = await request.text();

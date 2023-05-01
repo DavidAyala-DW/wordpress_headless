@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import { XMLParser, XMLBuilder} from "fast-xml-parser";
 
 export default async function handler(req, res) {
@@ -41,11 +42,12 @@ export default async function handler(req, res) {
 
     const xmlContent = builder.build(newParsedXML);
 
-    fs.writeFile("./public/sitemap.xml", xmlContent, (err) => {
+    fs.writeFile(path.join(process.cwd(), "/public/sitemap.xml"), xmlContent, (err) => {
       if (err) {
         console.error(err);
         res.status(500).json({ message: 'Error creating file' });
       } else {
+        console.log("ile created successfully");
         res.status(200).json({ message: 'File created successfully', data: newParsedXML });
       }      
     });

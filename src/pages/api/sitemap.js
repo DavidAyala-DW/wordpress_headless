@@ -19,13 +19,10 @@ export default async function handler(req, res) {
     const filteredLocs = currentParsedXML.sitemapindex.sitemap.filter(sitemap => !sitemap.loc.includes("en-ca") && !sitemap.loc.includes("fr-ca") )
     const new_sitemaps = [
       {
-        "loc": "https://www.kurufootwear.com/a/seo/blog.xml"
+        "loc": "https://www.kurufootwear.com/a/sitemap/blog.xml"
       },
       {
-        "loc": "https://www.kurufootwear.com/a/seo/experts-corner.xml"
-      },
-      {
-        "loc": "https://www.kurufootwear.com/a/seo/reports.xml"
+        "loc": "https://www.kurufootwear.com/a/sitemap/reports.xml"
       }
     ]
 

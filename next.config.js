@@ -1,5 +1,8 @@
-const isProd = process.env.NODE_ENV === 'production'
-
-module.exports = {
-    assetPrefix: isProd ? 'https://wordpress-headless-david-ayala.vercel.app/' : undefined,
-}
+/**
+ * @type {import('next').NextConfig}
+ */
+const nextConfig = {
+    /* config options here */
+  }
+  
+  module.exports = nextConfig

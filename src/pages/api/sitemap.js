@@ -56,6 +56,8 @@ export default async function handler(req, res) {
 
       client.close();
 
+      await fetch(process.env.WEBHOOK, {method: "POST"});
+
       res.status(200).json({ message: 'File created successfully', data: newParsedXML });
     } catch (error) {
       console.error(error);

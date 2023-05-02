@@ -1,4 +1,4 @@
-import { XMLParser, XMLBuilder} from "fast-xml-parser";
+import { XMLBuilder} from "fast-xml-parser";
 import { MongoClient } from 'mongodb';
 const url = process.env.MONGO_URI;
 const dbName = 'sitemap';
@@ -7,7 +7,7 @@ export default function SitemapXml({xml}) {
   return xml;
 }
 
-export async function getServerSideProps({req, res}) {
+export async function getStaticProps({res}) {
 
   const client = await MongoClient.connect(url);
   const db = client.db(dbName);    

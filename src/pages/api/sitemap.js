@@ -19,14 +19,17 @@ export default async function handler(req, res) {
     });
 
     const currentParsedXML = parser.parse(reponse);
-    
-    const filteredLocs = currentParsedXML.sitemapindex.sitemap.filter(sitemap => !sitemap.loc.includes("en-ca") && !sitemap.loc.includes("fr-ca") )
+    const invalid_content = ["en-ca","fr-ca","sitemap_blogs_"];
+    const filteredLocs = currentParsedXML.sitemapindex.sitemap.filter(sitemap => !invalid_content.some(el => sitemap.includes(el)) )
     const new_sitemaps = [
       {
-        "loc": "https://www.kurufootwear.com/a/sitemap/blog.xml"
+        "loc": "https://www.kurufootwear.com/a/sitemap/sitemap_pages_experts.xml"
       },
       {
-        "loc": "https://www.kurufootwear.com/a/sitemap/reports.xml"
+        "loc": "https://www.kurufootwear.com/a/sitemap/sitemap_blog.xml"
+      },
+      {
+        "loc": "https://www.kurufootwear.com/a/sitemap/sitemap_reports.xml"
       }
     ]
 

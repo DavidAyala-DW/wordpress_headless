@@ -7,7 +7,7 @@ export default function SitemapXml({xml}) {
   return xml;
 }
 
-export async function getStaticProps({res}) {
+export async function getServerSideProps({res}) {
 
   const client = await MongoClient.connect(url);
   const db = client.db(dbName);    

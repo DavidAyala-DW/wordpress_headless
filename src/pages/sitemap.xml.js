@@ -25,7 +25,6 @@ export async function getServerSideProps({res}) {
 
   const xmlContent = builder.build(JSON.parse(current_sitemap));
   res.setHeader('Content-Type', 'application/xml');
-  res.setHeader('Cache-Control', 'public, max-age=86400');
   res.write(xmlContent)
   res.end()
   

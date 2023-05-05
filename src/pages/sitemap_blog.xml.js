@@ -3,7 +3,7 @@ import { MongoClient } from 'mongodb';
 const url = process.env.MONGO_URI;
 const dbName = 'sitemap';
 
-export default function SitemapXml({xml}) {
+export default function SitemapBlogXml({xml}) {
   return xml;
 }
 
@@ -13,7 +13,7 @@ export async function getServerSideProps({res}) {
   const db = client.db(dbName);    
   const collection = db.collection("sitemaps");
 
-  const data = await collection.findOne({_type : "index"});
+  const data = await collection.findOne({_type : "blog"});
 
   const builder = new XMLBuilder({
     ignoreAttributes: false,

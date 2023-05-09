@@ -69,16 +69,16 @@ export default async function handler(req, res) {
     shoes_home.loc = "https://www.kurufootwear.com/a/shoes";
     ec_urls.push(shoes_home);
 
-    blog_urls.forEach(url => {
-      url.changefreq = "weekly";
+    blog_urls.forEach((url, i) => {
+      blog_urls[i].changefreq = "weekly";
     })
 
-    ec_urls.forEach(url => {
-      url.changefreq = "weekly";
+    ec_urls.forEach((url, i) => {
+      ec_urls[i].changefreq = "weekly";
     })
 
-    reports_urls.forEach(url => {
-      url.changefreq = "weekly";
+    reports_urls.forEach((url, i) => {
+      reports_urls[i].changefreq = "weekly";
     })
 
     const blog_xml = {

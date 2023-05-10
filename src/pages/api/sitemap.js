@@ -53,7 +53,7 @@ export default async function handler(req, res) {
 
     const wordpress_home = urlset.url.find(url => url.loc == "https://www.kurufootwear.com" );
 
-    const blog_urls = parsed_urlset.filter(url => url.loc.includes("/a/blog/"));
+    let blog_urls = parsed_urlset.filter(url => url.loc.includes("/a/blog/"));
     const ec_urls = parsed_urlset.filter(url => url.loc.includes("/a/shoes/"));
     const reports_urls = parsed_urlset.filter(url => url.loc.includes("/a/reports/"));
 

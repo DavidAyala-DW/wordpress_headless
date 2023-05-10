@@ -57,7 +57,7 @@ export default async function handler(req, res) {
     const ec_urls = parsed_urlset.filter(url => url.loc.includes("/a/shoes/"));
     const reports_urls = parsed_urlset.filter(url => url.loc.includes("/a/reports/"));
 
-    const ec_activity = blog_urls.find(url => url.loc.includes("/a/blog/activity"));
+    const ec_activity = {...blog_urls.find(url => url.loc.includes("/a/blog/activity"))};
     ec_activity.loc = ec_activity.loc.replace("blog","shoes");
     ec_urls.push(ec_activity);
 
@@ -71,7 +71,7 @@ export default async function handler(req, res) {
     const publish_date = new Date("2023-05-11T00:00:00+00:00").getTime();
     const publish_date_string = new Date("2023-05-11T00:00:00+00:00").toISOString().replace('Z', '+00:00');
 
-    blog_urls = blog_urls.filter(url => url.loc != "/a/blog/activity");
+    blog_urls = blog_urls.filter(url => url.loc != "/a/shoes");
  
     blog_urls.forEach((url, i) => {
       const lastmod_date = new Date(url.lastmod).getTime();

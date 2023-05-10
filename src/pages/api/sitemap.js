@@ -70,6 +70,8 @@ export default async function handler(req, res) {
     ec_urls.push(shoes_home);
     const publish_date = new Date("2023-05-11T00:00:00+00:00").getTime();
     const publish_date_string = new Date("2023-05-11T00:00:00+00:00").toISOString().replace('Z', '+00:00');
+
+    blog_urls = blog_urls.filter(url => url.loc != "/a/blog/activity");
  
     blog_urls.forEach((url, i) => {
       const lastmod_date = new Date(url.lastmod).getTime();

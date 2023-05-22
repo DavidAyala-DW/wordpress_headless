@@ -35,11 +35,6 @@ export default async function handler(req, res) {
     const newParsedXML = {
       sitemapindex: {
         sitemap: [...filteredLocs, ...new_sitemaps],
-        date: [
-          {            
-            "@@value": new Date().toISOString()
-          }
-        ],
         "@@xmlns": currentParsedXML.sitemapindex["@@xmlns"]
       }
     };

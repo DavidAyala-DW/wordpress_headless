@@ -74,6 +74,7 @@ export default async function handler(req, res) {
         blog_urls[i].lastmod = publish_date_string;
       }
       blog_urls[i].changefreq = "weekly";
+      blog_urls[i].priority = parseFloat(blog_urls[i].priority).toFixed(1);
     })
 
     ec_urls.forEach((url, i) => {
@@ -82,6 +83,7 @@ export default async function handler(req, res) {
         ec_urls[i].lastmod = publish_date_string;
       }
       ec_urls[i].changefreq = "weekly";
+      ec_urls[i].priority = parseFloat(ec_urls[i].priority).toFixed(1);
     })
 
     reports_urls.forEach((url, i) => {
@@ -90,9 +92,14 @@ export default async function handler(req, res) {
         reports_urls[i].lastmod = publish_date_string;
       }
       reports_urls[i].changefreq = "weekly";
+      reports_urls[i].priority = parseFloat(reports_urls[i].priority).toFixed(1);
     })
 
     const blog_xml = {
+      "?xml":{
+        "@@version": "1.0",
+        "@@encoding": "UTF-8"        
+      },
       urlset: {
         url: blog_urls,
         "@@xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9",
@@ -101,6 +108,10 @@ export default async function handler(req, res) {
     }
 
     const shoes_xml = {
+      "?xml":{
+        "@@version": "1.0",
+        "@@encoding": "UTF-8"        
+      },
       urlset: {
         url: ec_urls,
         "@@xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9",
@@ -109,6 +120,10 @@ export default async function handler(req, res) {
     }
 
     const reports_xml = {
+      "?xml":{
+        "@@version": "1.0",
+        "@@encoding": "UTF-8"        
+      },
       urlset: {
         url: reports_urls,
         "@@xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9",
@@ -148,7 +163,7 @@ export default async function handler(req, res) {
 
       client.close();
 
-      await fetch(process.env.WEBHOOK, {method: "POST"});
+      // await fetch(process.env.WEBHOOK, {method: "POST"});
 
       res.status(200).json({ message: 'XML files has been created successfully.'});
 

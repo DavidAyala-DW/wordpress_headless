@@ -29,6 +29,9 @@ export default async function handler(req, res) {
       },
       {
         "loc": "https://www.kurufootwear.com/a/sitemap/sitemap_reports.xml"
+      },
+      {
+        "loc": "https://www.kurufootwear.com/a/sitemap/sitemap_compare.xml"
       }
     ]
 
@@ -51,6 +54,7 @@ export default async function handler(req, res) {
     let blog_urls = parsed_urlset.filter(url => url.loc.includes("/a/blog/"));
     const ec_urls = parsed_urlset.filter(url => url.loc.includes("/a/shoes/"));
     const reports_urls = parsed_urlset.filter(url => url.loc.includes("/a/reports/"));
+    const compare_urls = parsed_urlset.filter(url => url.loc.includes("/a/compare/"));
 
     const ec_activity = {...blog_urls.find(url => url.loc.includes("/a/blog/activity"))};
     ec_activity.loc = ec_activity.loc.replace("blog","shoes");
@@ -95,6 +99,15 @@ export default async function handler(req, res) {
       reports_urls[i].priority = parseFloat(reports_urls[i].priority).toFixed(1);
     })
 
+    compare_urls.forEach((url, i) => {
+      const lastmod_date = new Date(url.lastmod).getTime();
+      if(lastmod_date <= publish_date){        
+        compare_urls[i].lastmod = publish_date_string;
+      }
+      compare_urls[i].changefreq = "weekly";
+      compare_urls[i].priority = parseFloat(compare_urls[i].priority).toFixed(1);
+    })
+
     const blog_xml = {
       "?xml":{
         "@@version": "1.0",
@@ -131,6 +144,18 @@ export default async function handler(req, res) {
       }
     }
 
+    const compare_pages_xml = {
+      "?xml":{
+        "@@version": "1.0",
+        "@@encoding": "UTF-8"        
+      },
+      urlset: {
+        url: compare_urls,
+        "@@xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9",
+        "@@xmlns:image": "http://www.google.com/schemas/sitemap-image/1.1"
+      }
+    }
+
     const client = await MongoClient.connect(url);
 
     try {
@@ -158,6 +183,12 @@ export default async function handler(req, res) {
       await collection.updateOne(
         {_type: "reports"},
         { $set: {_type:"reports", xml: JSON.stringify(reports_xml)} }, // The update operation
+        { upsert: true } // The upsert option
+      );
+
+      await collection.updateOne(
+        {_type: "compare"},
+        { $set: {_type:"compare", xml: JSON.stringify(compare_pages_xml)} }, // The update operation
         { upsert: true } // The upsert option
       );
 

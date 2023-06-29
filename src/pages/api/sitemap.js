@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     });
 
     const currentParsedXML = parser.parse(reponse);
-    const invalid_content = ["en-ca","fr-ca","sitemap_blogs_"];
+    const invalid_content = ["sitemap_blogs_"];
     const filteredLocs = currentParsedXML.sitemapindex.sitemap.filter(sitemap => !invalid_content.some(el => sitemap.loc.includes(el)) )
     const new_sitemaps = [
       {

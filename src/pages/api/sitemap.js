@@ -25,13 +25,25 @@ export default async function handler(req, res) {
         "loc": "https://www.kurufootwear.com/a/sitemap/sitemap_pages_experts.xml"
       },
       {
+        "loc": "https://www.kurufootwear.com/a/sitemap/fr/sitemap_pages_experts.xml"
+      },
+      {
         "loc": "https://www.kurufootwear.com/a/sitemap/sitemap_blog.xml"
+      },
+      {
+        "loc": "https://www.kurufootwear.com/a/sitemap/fr/sitemap_blog.xml"
       },
       {
         "loc": "https://www.kurufootwear.com/a/sitemap/sitemap_reports.xml"
       },
       {
+        "loc": "https://www.kurufootwear.com/a/sitemap/fr/sitemap_reports.xml"
+      },
+      {
         "loc": "https://www.kurufootwear.com/a/sitemap/sitemap_compare.xml"
+      },
+      {
+        "loc": "https://www.kurufootwear.com/a/sitemap/fr/sitemap_compare.xml"
       }
     ]
 
@@ -120,6 +132,25 @@ export default async function handler(req, res) {
       }
     }
 
+    const fr_blog_xml = {
+      "?xml":{
+        "@@version": "1.0",
+        "@@encoding": "UTF-8"        
+      },
+      urlset: {
+        url: blog_urls.map(blog => {
+          const new_blog = {...blog};
+          new_blog.loc = new_blog.loc.replace("/a/blog","/a/blog/fr");
+          if(new_blog.loc.split("/").slice(-1)[0] == "fr" || new_blog.loc.split("/").slice(-1)[0] == ""){
+           new_blog.loc += "/home"
+          }
+          return new_blog;
+        }),
+        "@@xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9",
+        "@@xmlns:image": "http://www.google.com/schemas/sitemap-image/1.1"
+      }
+    }
+
     const shoes_xml = {
       "?xml":{
         "@@version": "1.0",
@@ -127,6 +158,25 @@ export default async function handler(req, res) {
       },
       urlset: {
         url: ec_urls,
+        "@@xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9",
+        "@@xmlns:image": "http://www.google.com/schemas/sitemap-image/1.1"
+      }
+    }
+
+    const fr_shoes_xml = {
+      "?xml":{
+        "@@version": "1.0",
+        "@@encoding": "UTF-8"        
+      },
+      urlset: {
+        url: ec_urls.map(blog => {
+          const new_blog = {...blog};
+          new_blog.loc = new_blog.loc.replace("/a/shoes","/a/shoes/fr");
+          if(new_blog.loc.split("/").slice(-1)[0] == "fr" || new_blog.loc.split("/").slice(-1)[0] == ""){
+           new_blog.loc += "/home"
+          }
+          return new_blog;
+        }),
         "@@xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9",
         "@@xmlns:image": "http://www.google.com/schemas/sitemap-image/1.1"
       }
@@ -144,6 +194,18 @@ export default async function handler(req, res) {
       }
     }
 
+    const fr_reports_xml = {
+      "?xml":{
+        "@@version": "1.0",
+        "@@encoding": "UTF-8"        
+      },
+      urlset: {
+        url: reports_urls.map(report => ({...report, loc: report.loc.replace("/a/reports","/a/reports/fr")})),
+        "@@xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9",
+        "@@xmlns:image": "http://www.google.com/schemas/sitemap-image/1.1"
+      }
+    }
+
     const compare_pages_xml = {
       "?xml":{
         "@@version": "1.0",
@@ -151,6 +213,18 @@ export default async function handler(req, res) {
       },
       urlset: {
         url: compare_urls,
+        "@@xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9",
+        "@@xmlns:image": "http://www.google.com/schemas/sitemap-image/1.1"
+      }
+    }
+
+    const fr_compare_pages_xml = {
+      "?xml":{
+        "@@version": "1.0",
+        "@@encoding": "UTF-8"        
+      },
+      urlset: {
+        url: compare_urls.map(compare => ({...compare, loc: compare.loc.replace("/a/compare","/a/compare/fr")})),
         "@@xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9",
         "@@xmlns:image": "http://www.google.com/schemas/sitemap-image/1.1"
       }
@@ -175,8 +249,20 @@ export default async function handler(req, res) {
       );
 
       await collection.updateOne(
+        {_type: "fr_blog"},
+        { $set: {_type:"fr_blog", xml: JSON.stringify(fr_blog_xml)} }, // The update operation
+        { upsert: true } // The upsert option
+      );
+
+      await collection.updateOne(
         {_type: "ec"},
         { $set: {_type:"ec", xml: JSON.stringify(shoes_xml)} }, // The update operation
+        { upsert: true } // The upsert option
+      );
+
+      await collection.updateOne(
+        {_type: "fr_ec"},
+        { $set: {_type:"fr_ec", xml: JSON.stringify(fr_shoes_xml)} }, // The update operation
         { upsert: true } // The upsert option
       );
 
@@ -187,8 +273,20 @@ export default async function handler(req, res) {
       );
 
       await collection.updateOne(
+        {_type: "fr_reports"},
+        { $set: {_type:"fr_reports", xml: JSON.stringify(fr_reports_xml)} }, // The update operation
+        { upsert: true } // The upsert option
+      );
+
+      await collection.updateOne(
         {_type: "compare"},
         { $set: {_type:"compare", xml: JSON.stringify(compare_pages_xml)} }, // The update operation
+        { upsert: true } // The upsert option
+      );
+
+      await collection.updateOne(
+        {_type: "fr_compare"},
+        { $set: {_type:"fr_compare", xml: JSON.stringify(fr_compare_pages_xml)} }, // The update operation
         { upsert: true } // The upsert option
       );
 
@@ -196,7 +294,7 @@ export default async function handler(req, res) {
 
       // await fetch(process.env.WEBHOOK, {method: "POST"});
 
-      res.status(200).json({ message: 'XML files has been created successfully.'});
+      res.status(200).json({ message: 'XML files have been created successfully.'});
 
     } catch (error) {
       console.error(error);

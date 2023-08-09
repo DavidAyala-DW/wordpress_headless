@@ -292,8 +292,6 @@ export default async function handler(req, res) {
 
       client.close();
 
-      // await fetch(process.env.WEBHOOK, {method: "POST"});
-
       res.status(200).json({ message: 'XML files have been created successfully.'});
 
     } catch (error) {

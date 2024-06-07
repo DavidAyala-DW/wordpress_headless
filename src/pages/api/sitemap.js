@@ -146,8 +146,7 @@ export default async function handler(req, res) {
            new_blog.loc += "/home"
           }
           return new_blog;
-        }).filter(blog => blog.loc != "https://www.kurufootwear.com/a/blog/fr/home")
-        ,
+        }).filter(blog => blog.loc.includes("/fr/home")),        
         "@@xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9",
         "@@xmlns:image": "http://www.google.com/schemas/sitemap-image/1.1"
       }

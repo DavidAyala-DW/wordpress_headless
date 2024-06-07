@@ -138,6 +138,7 @@ export default async function handler(req, res) {
         "@@encoding": "UTF-8"        
       },
       urlset: {
+        //Filter to don't include the home page (/a/blog/fr/home)
         url: blog_urls.map(blog => {
           const new_blog = {...blog};
           new_blog.loc = new_blog.loc.replace("/a/blog","/a/blog/fr");
@@ -145,7 +146,8 @@ export default async function handler(req, res) {
            new_blog.loc += "/home"
           }
           return new_blog;
-        }),
+        }).filter(blog => blog.loc != "https://www.kurufootwear.com/a/blog/fr/home")
+        ,
         "@@xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9",
         "@@xmlns:image": "http://www.google.com/schemas/sitemap-image/1.1"
       }

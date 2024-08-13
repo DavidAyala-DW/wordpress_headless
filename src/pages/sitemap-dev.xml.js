@@ -24,7 +24,8 @@ export async function getServerSideProps({ res }) {
   const filteredSitemap = sitemap.sitemapindex.sitemap.filter(
     (item) =>
       !item.loc.includes("sitemap_pages_experts") &&
-      !item.loc.includes("sitemap_blog")
+      !item.loc.includes("/a/sitemap/sitemap_blog.xml") &&
+      !item.loc.includes("/a/sitemap/fr/sitemap_blog.xml")
   );
   sitemap.sitemapindex.sitemap = filteredSitemap;
 

@@ -21,9 +21,14 @@ export async function getServerSideProps({res}) {
     format: true
   });
 
-  const current_sitemap = data?.xml;
+  const sitemap = JSON.parse(data?.xml);
+  const filteredSitemap = sitemap.sitemapindex.sitemap.filter(
+    (item) =>
+      !item.loc.includes("sitemap_blogs")
+  );
+  sitemap.sitemapindex.sitemap = filteredSitemap;
 
-  const xmlContent = builder.build(JSON.parse(current_sitemap));
+  const xmlContent = builder.build(sitemap);
   res.setHeader('Content-Type', 'application/xml');
   res.write(xmlContent)
   res.end()
